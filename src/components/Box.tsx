@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import  { useRef, useState } from 'react'
+import { useFrame } from '@react-three/fiber'
 import { Mesh } from 'three'
 
 interface BoxProps {
@@ -14,7 +14,7 @@ export default function Box(props: BoxProps) {
   const [hovered, setHover] = useState(false)
   const [active, setActive] = useState(false)
   // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (meshRef.current) {
       meshRef.current.rotation.x += delta;
     }
@@ -25,9 +25,9 @@ export default function Box(props: BoxProps) {
       {...props}
       ref={meshRef}
       scale={active ? 1.5 : 1}
-      onClick={(event) => setActive(!active)}
-      onPointerOver={(event) => setHover(true)}
-      onPointerOut={(event) => setHover(false)}>
+      onClick={(_) => setActive(!active)}
+      onPointerOver={(_) => setHover(true)}
+      onPointerOut={(_) => setHover(false)}>
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
     </mesh>
