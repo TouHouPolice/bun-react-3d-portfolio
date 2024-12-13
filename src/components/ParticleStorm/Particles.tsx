@@ -1,21 +1,24 @@
 import { 
     Vector3, Color, 
-    AdditiveBlending, 
-    InstancedBufferAttribute,
-    SpriteMaterial
+    AdditiveBlending
 } from 'three';
 
-import {SpriteNodeMaterial} from 'three/webgpu';
+import { buffer } from 'three/src/nodes/accessors/BufferNode.js';
 
-import { float, If, PI, color, cos, 
+import { ShaderNodeObject, SpriteNodeMaterial } from 'three/webgpu';
+
+import { float, If, PI, color, cos,
     instanceIndex, Loop, mix, mod, sin, 
     Fn, uint, uniform, uniformArray, 
-    hash, vec3, vec4, instancedBufferAttribute
+    hash, vec3, vec4
 } from 'three/tsl'
 
+import { useThree } from '@react-three/fiber';
 
 import { useControls } from 'leva';
 import { useEffect, useMemo, useState } from 'react';
+import OperatorNode from 'three/src/nodes/math/OperatorNode.js';
+
 export interface ParticleParams {
     count: number;
     timeScale: number;
@@ -57,6 +60,8 @@ export default function Particles({
     particleParams = kDefaultParticleParams,
     setParticleParams = () => {},
 }: ParticlesProps){
+    //get webgpu renderer
+    const { gl } = useThree();
 
     const { 
         mCount, 
@@ -105,14 +110,53 @@ export default function Particles({
         }));
     
     const {positionBuffer, velocityBuffer} = useMemo(() => {
-        const totalElementCount = new Float32Array(mCount * 3);
         //Each item uses 3 elements in the array
         return {
-            positionBuffer: new InstancedBufferAttribute(totalElementCount, 3),
-            velocityBuffer: new InstancedBufferAttribute(totalElementCount, 3),
+            positionBuffer: buffer( new Float32Array( mCount * 3 ), 'vec3', mCount ),
+            velocityBuffer: buffer( new Float32Array( mCount * 3 ), 'vec3', mCount )
         };
     }, [mCount]);
 
+    
+    const sphericalToVec3 = Fn( ( [ phi, theta ]: 
+        [ShaderNodeObject<OperatorNode>, ShaderNodeObject<OperatorNode>] ) => {
+        const sinPhiRadius = sin( phi );
+        return vec3(
+            sinPhiRadius.mul( sin( theta ) ),
+            cos( phi ),
+            sinPhiRadius.mul( cos( theta ) )
+        );
+    } );
+
+    // init compute
+
+    const init = Fn( () => {
+        const position = positionBuffer.element( instanceIndex );
+        const velocity = velocityBuffer.element( instanceIndex );
+
+        const basePosition = vec3(
+            hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ),
+            hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ),
+            hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) )
+        ).sub( 0.5 ).mul( vec3( 5, 0.2, 5 ) );
+        position.assign( basePosition );
+
+        const phi = hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ).mul( PI ).mul( 2 );
+        const theta = hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ).mul( PI );
+        const baseVelocity = sphericalToVec3( phi, theta ).mul( 0.05 );
+        velocity.assign( baseVelocity );
+    } );
+
+    // const initCompute = init().compute( uniform( mCount ) );
+
+    // const reset = () => {
+    //     const renderer = gl as WebGLRenderer;
+    //     renderer.computeAsync( initCompute );
+    // };
+
+    // useEffect(()=>{
+    //     reset();
+    // }, [mCount]);
 
     return <>
         
