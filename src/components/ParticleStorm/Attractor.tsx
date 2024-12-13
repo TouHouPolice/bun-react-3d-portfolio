@@ -6,14 +6,18 @@ import { GlobalStateContext } from "../../context/GlobalStateProvider";
 
 interface AttractorProps {
     position?: Vector3,
+    setPosition?: (position: Vector3) => void,
     rotationAxis?: Vector3,
+    setRotationAxis?: (rotationAxis: Vector3) => void,
     enableTransformControls?: boolean,
     controlMode?: 'translate' | 'rotate',
 }
 
 export default function Attractor({
     position = new Vector3(0, 0, 0),
+    setPosition = () => {},
     rotationAxis = new Vector3(0, 1, 0),
+    setRotationAxis = () => {},
     enableTransformControls = true,
     controlMode = 'rotate',
 }: AttractorProps) {
@@ -64,8 +68,8 @@ export default function Attractor({
                 onMouseUp={(_) => setAllowOrbitControl(true)}
                 onObjectChange={(_) => {
                     if (attractorRef.current) {
-                        position = attractorRef.current.position;
-                        rotationAxis = new Vector3( 0, 1, 0 ).applyQuaternion( attractorRef.current.quaternion );
+                        setPosition(attractorRef.current.position);
+                        setRotationAxis(new Vector3(0, 1, 0).applyQuaternion(attractorRef.current.quaternion));
                     }
                 }}
             />

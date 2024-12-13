@@ -1,18 +1,19 @@
-import { float, If, PI, color, cos, instanceIndex, Loop, mix, mod, sin, Fn, uint, uniform, uniformArray, hash, vec3, vec4 } from 'three/tsl'
 import {OrbitControls, PerspectiveCamera} from '@react-three/drei'
-import { Vector3 } from 'three';
 import { useThree } from '@react-three/fiber';
+import { Vector3 } from 'three';
 import { useControls } from 'leva';
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext } from 'react';
 import { GlobalStateContext } from '../../context/GlobalStateProvider';
 import Attractor from './Attractor';
+import Particles, {ParticleParams, kDefaultParticleParams} from './Particles';
 
 
 //https://github.com/mrdoob/three.js/blob/master/examples/webgpu_tsl_compute_attractors_particles.html
 export default function ParticleStorm() {
-    const camRef = useRef<PerspectiveCamera | null>(null);
+    const camRef = useRef<PerspectiveCamera>(null);
     const {size} = useThree();
     const {allowOrbitControl} = useContext(GlobalStateContext);
+    const [particleParams, setParticleParams] = useState<ParticleParams>(kDefaultParticleParams);
     
 
     const { controlMode } = useControls({
@@ -31,7 +32,13 @@ export default function ParticleStorm() {
         new Vector3(0, 1, 0),
         new Vector3(1, 0, -0.5).normalize(),
     ]);
-  
+
+    const [attractorsMasses] = useState([
+        Number(`1e${7}`),
+        Number(`1e${7}`),
+        Number(`1e${7}`),
+    ]);
+
     return (
     <>
         <PerspectiveCamera
@@ -60,11 +67,20 @@ export default function ParticleStorm() {
         
         <Attractor
         position={attractorsPositions[0]}
+        setPosition={(pos) => {attractorsPositions[0] = pos}}
         rotationAxis={attractorsRotationAxes[0]}
+        setRotationAxis={(axis) => {attractorsRotationAxes[0] = axis}}
         enableTransformControls={true}
         controlMode={controlMode as 'translate' | 'rotate'}
         />
         
+        <Particles
+        attractorPositions={attractorsPositions}
+        attractorRotationAxes={attractorsRotationAxes}
+        attractorMasses={attractorsMasses}
+        particleParams={particleParams}
+        setParticleParams={setParticleParams}
+        />
     </>
     );
 }
