@@ -1,14 +1,10 @@
-import { Canvas } from '@react-three/fiber';
-//import { Color } from 'three';
-import ParticleStorm from './ParticleStorm';
+import { Canvas, useThree } from '@react-three/fiber';
 import { Stats } from '@react-three/drei';
-//import { WebGPURenderer } from 'three/webgpu';
-import WebGPUInitializer from '../WebGPUInitializer';
+import ParticleStorm from './ParticleStorm';
 
 export default function ParticleStormCanvas() {
     return (
         <Canvas>
-            <WebGPUInitializer />
             <ParticleStorm />
             <Stats />
         </Canvas>

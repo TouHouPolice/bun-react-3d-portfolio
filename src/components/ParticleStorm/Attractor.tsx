@@ -1,7 +1,7 @@
 import { useEffect, useRef, useContext } from "react";
 import { DoubleSide, Vector3, Object3D } from "three";
 import { Cone, Ring, TransformControls } from '@react-three/drei';
-import { GlobalStateContext } from "../../context/GlobalStateProvider";
+import { GlobalStateContext } from "@context/GlobalStateProvider";
 
 
 interface AttractorProps {

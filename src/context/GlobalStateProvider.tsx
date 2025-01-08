@@ -15,9 +15,11 @@ export const GlobalStateContext = createContext<GlobalState>(defaultState);
 
 export const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
   const [allowOrbitControl, setAllowOrbitControl] = useState(true);
-
   return (
-    <GlobalStateContext.Provider value={{ allowOrbitControl, setAllowOrbitControl }}>
+    <GlobalStateContext.Provider value={{ 
+      allowOrbitControl, 
+      setAllowOrbitControl,
+      }}>
       {children}
     </GlobalStateContext.Provider>
   );

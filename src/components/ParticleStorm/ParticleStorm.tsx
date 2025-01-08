@@ -3,14 +3,14 @@ import { useThree } from '@react-three/fiber';
 import { Vector3 } from 'three';
 import { useControls } from 'leva';
 import { useRef, useState, useContext } from 'react';
-import { GlobalStateContext } from '../../context/GlobalStateProvider';
+import { GlobalStateContext } from '@context/GlobalStateProvider';
 import Attractor from './Attractor';
-import Particles, {ParticleParams, kDefaultParticleParams} from './Particles';
-
+import Particles from './Particles';
+import { ParticleParams, kDefaultParticleParams } from './ParticleParams';
 
 //https://github.com/mrdoob/three.js/blob/master/examples/webgpu_tsl_compute_attractors_particles.html
 export default function ParticleStorm() {
-    const camRef = useRef<PerspectiveCamera>(null);
+    const camRef = useRef(null);
     const {size} = useThree();
     const {allowOrbitControl} = useContext(GlobalStateContext);
     const [particleParams, setParticleParams] = useState<ParticleParams>(kDefaultParticleParams);
@@ -51,13 +51,15 @@ export default function ParticleStorm() {
         aspect={size.width / size.height}
         ></PerspectiveCamera>
 
-        <OrbitControls 
-        camera={camRef.current}
-        enabled={allowOrbitControl}
-        enableDamping
-        minDistance={0.1}
-        maxDistance={50}
-        />
+        {camRef.current && (
+            <OrbitControls 
+            camera={camRef.current}
+            enabled={allowOrbitControl}
+            enableDamping
+            minDistance={0.1}
+            maxDistance={50}
+            />
+        )}
 
         <ambientLight 
         position={[4,2,0]}

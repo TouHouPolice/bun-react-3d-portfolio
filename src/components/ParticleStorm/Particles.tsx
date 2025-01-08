@@ -1,49 +1,14 @@
 import { 
     Vector3, Color, 
-    AdditiveBlending
 } from 'three';
 
-import { buffer } from 'three/src/nodes/accessors/BufferNode.js';
-
-import { ShaderNodeObject, SpriteNodeMaterial } from 'three/webgpu';
-
-import { float, If, PI, color, cos,
-    instanceIndex, Loop, mix, mod, sin, 
-    Fn, uint, uniform, uniformArray, 
-    hash, vec3, vec4
-} from 'three/tsl'
-
-import { useThree } from '@react-three/fiber';
-
 import { useControls } from 'leva';
-import { useEffect, useMemo, useState } from 'react';
-import OperatorNode from 'three/src/nodes/math/OperatorNode.js';
+import { useEffect} from 'react';
 
-export interface ParticleParams {
-    count: number;
-    timeScale: number;
-    spinningStrength: number;
-    maxSpeed: number;
-    gravityConstant: number;
-    velocityDamping: number;
-    scale: number;
-    boundHalfExtent: number;
-    colorA: Color;
-    colorB: Color;
-}
+import dummyComputeVert from '@shaders/dummy_compute.vert?raw';
+import dummyComputeFrag from '@shaders/dummy_compute.frag?raw';
 
-export const kDefaultParticleParams: ParticleParams = {
-    count: Math.pow( 2, 18 ),
-    timeScale: 1,
-    spinningStrength: 2.75,
-    maxSpeed: 8,
-    gravityConstant: 6.67e-11,
-    velocityDamping: 0.1,
-    scale: 0.008,
-    boundHalfExtent: 8,
-    colorA: new Color('#5900ff'),
-    colorB: new Color('#ffa575'),
-};
+import { ParticleParams, kDefaultParticleParams } from './ParticleParams';
 
 interface ParticlesProps {
     attractorPositions?: Vector3[];
@@ -60,9 +25,6 @@ export default function Particles({
     particleParams = kDefaultParticleParams,
     setParticleParams = () => {},
 }: ParticlesProps){
-    //get webgpu renderer
-    const { gl } = useThree();
-
     const { 
         mCount, 
         mTimeScale, 
@@ -100,63 +62,9 @@ export default function Particles({
             colorA: new Color(mColorA),
             colorB: new Color(mColorB),
         });
+        console.log(dummyComputeVert);
     }, [mCount, mTimeScale, mSpinningStrength, mMaxSpeed, mGravityConstant, mVelocityDamping, mScale, mBoundHalfExtent, mColorA, mColorB]);
 
-
-    const [material] = useState(new SpriteNodeMaterial({
-        transparent: true,
-        blending: AdditiveBlending,
-        depthWrite: false,
-        }));
-    
-    const {positionBuffer, velocityBuffer} = useMemo(() => {
-        //Each item uses 3 elements in the array
-        return {
-            positionBuffer: buffer( new Float32Array( mCount * 3 ), 'vec3', mCount ),
-            velocityBuffer: buffer( new Float32Array( mCount * 3 ), 'vec3', mCount )
-        };
-    }, [mCount]);
-
-    
-    const sphericalToVec3 = Fn( ( [ phi, theta ]: 
-        [ShaderNodeObject<OperatorNode>, ShaderNodeObject<OperatorNode>] ) => {
-        const sinPhiRadius = sin( phi );
-        return vec3(
-            sinPhiRadius.mul( sin( theta ) ),
-            cos( phi ),
-            sinPhiRadius.mul( cos( theta ) )
-        );
-    } );
-
-    // init compute
-
-    const init = Fn( () => {
-        const position = positionBuffer.element( instanceIndex );
-        const velocity = velocityBuffer.element( instanceIndex );
-
-        const basePosition = vec3(
-            hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ),
-            hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ),
-            hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) )
-        ).sub( 0.5 ).mul( vec3( 5, 0.2, 5 ) );
-        position.assign( basePosition );
-
-        const phi = hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ).mul( PI ).mul( 2 );
-        const theta = hash( instanceIndex.add( uint( Math.random() * 0xffffff ) ) ).mul( PI );
-        const baseVelocity = sphericalToVec3( phi, theta ).mul( 0.05 );
-        velocity.assign( baseVelocity );
-    } );
-
-    // const initCompute = init().compute( uniform( mCount ) );
-
-    // const reset = () => {
-    //     const renderer = gl as WebGLRenderer;
-    //     renderer.computeAsync( initCompute );
-    // };
-
-    // useEffect(()=>{
-    //     reset();
-    // }, [mCount]);
 
     return <>
         

@@ -1,6 +1,6 @@
 import './styles/main.scss'
-import ParticleStormCanvas from './components/ParticleStorm/ParticleStormCanvas'
-import { GlobalStateProvider } from './context/GlobalStateProvider'
+import ParticleStormCanvas from '@components/ParticleStorm/ParticleStormCanvas'
+import { GlobalStateProvider } from "@context/GlobalStateProvider"
 
 
 function App() {
