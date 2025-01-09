@@ -30,7 +30,12 @@
       "@context/*": ["src/context/*"],
       "@assets/*": ["src/assets/*"],
     },
-    "types": ["node"]
+    "types": [
+      "node",
+      "vite-plugin-glsl/ext"
+    ]
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

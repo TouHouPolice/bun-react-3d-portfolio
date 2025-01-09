@@ -1,14 +1,26 @@
 import { 
-    Vector3, Color, 
+    Vector3, Color,
+    GLSL3,
+    WebGLRenderTarget,
+    FloatType,
+    NearestFilter,
+    RawShaderMaterial,
+    PlaneGeometry,
+    Mesh,
+
 } from 'three';
 
-import { useControls } from 'leva';
-import { useEffect} from 'react';
+import { useFBO } from '@react-three/drei';
 
-import dummyComputeVert from '@shaders/dummy_compute.vert?raw';
-import dummyComputeFrag from '@shaders/dummy_compute.frag?raw';
+import { useControls } from 'leva';
+import { useEffect, useMemo, useRef, useState} from 'react';
+
+import dummyComputeVert from '@shaders/dummy_compute.vert';
+import dummyComputeFrag from '@shaders/dummy_compute.frag';
 
 import { ParticleParams, kDefaultParticleParams } from './ParticleParams';
+import { useFrame, useThree } from '@react-three/fiber';
+import {GlslRemoveVersionLine} from '@utils/utils';
 
 interface ParticlesProps {
     attractorPositions?: Vector3[];
@@ -25,6 +37,8 @@ export default function Particles({
     particleParams = kDefaultParticleParams,
     setParticleParams = () => {},
 }: ParticlesProps){
+    const { gl, scene, camera } = useThree();
+    
     const { 
         mCount, 
         mTimeScale, 
@@ -49,6 +63,23 @@ export default function Particles({
         mColorB: { value: `#${particleParams.colorB.getHexString()}` },
     });
 
+    const computeShaderRef = useRef<RawShaderMaterial | null>(null);
+
+    const rtA = useFBO(256, 256, {
+        type: FloatType,
+        minFilter: NearestFilter,
+        magFilter: NearestFilter
+    });
+    
+    const rtB = useFBO(256, 256, {
+        type: FloatType,
+        minFilter: NearestFilter,
+        magFilter: NearestFilter,
+    });
+
+    const [currentRT, setCurrentRT] = useState(rtA);
+    const [nextRT, setNextRT] = useState(rtB);
+
     useEffect(() => {
         setParticleParams({
             count: mCount,
@@ -62,11 +93,47 @@ export default function Particles({
             colorA: new Color(mColorA),
             colorB: new Color(mColorB),
         });
-        console.log(dummyComputeVert);
     }, [mCount, mTimeScale, mSpinningStrength, mMaxSpeed, mGravityConstant, mVelocityDamping, mScale, mBoundHalfExtent, mColorA, mColorB]);
 
+    useFrame(({gl, clock}) => {
+        // Update uniforms in the shader material
+        if (!computeShaderRef.current) return;
+
+        // console.log(currentRT.texture);
+        const dt = clock.getDelta();
+        computeShaderRef.current.uniforms.deltaTime.value = dt;
+        computeShaderRef.current.uniforms.texturePosition.value = currentRT.texture;
+
+        // Render to ping-pong buffer
+        // console.log(nextRT.textures[0]);
+        gl.setRenderTarget(nextRT);
+        const plane = new Mesh(new PlaneGeometry(2, 2), computeShaderRef.current);
+        gl.render(plane, camera);
+        gl.setRenderTarget(null);
+
+        // Swap ping-pong buffers
+        const tmp = currentRT;
+        setCurrentRT(nextRT);
+        setNextRT(tmp);
+
+    });
 
     return <>
-        
+        <rawShaderMaterial
+            ref={computeShaderRef}
+            name="ParticleComputeShader"
+            uniforms={{
+                texturePosition: { value: null },
+                deltaTime: { value: 0 },
+                }}
+            vertexShader={GlslRemoveVersionLine(dummyComputeVert)}
+            fragmentShader={GlslRemoveVersionLine(dummyComputeFrag)}
+            transparent={false}
+            glslVersion={GLSL3}
+        />
+        <mesh>
+            <planeGeometry args={[3, 3]} />
+            <meshBasicMaterial map={currentRT.texture} />
+        </mesh>
     </>
 }

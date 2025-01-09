@@ -1,7 +1,13 @@
 {
     "cSpell.words": [
         "drei",
+        "glsl",
+        "highp",
         "tseslint",
         "webgpu"
     ],
+    "glsllint.additionalStageAssociations": {
+        ".frag": "frag",
+        ".vert": "vert"
+    }
 }
