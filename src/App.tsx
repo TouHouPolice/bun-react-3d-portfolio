@@ -1,7 +1,8 @@
 import './styles/main.scss'
-import ParticleStormCanvas from '@components/ParticleStorm/ParticleStormCanvas'
 import { GlobalStateProvider } from "@context/GlobalStateProvider"
 import { useErrorBoundary } from 'use-error-boundary'
+import ParticleSphere from '@components/ParticleSphere/ParticleSphere'
+import ThreeCanvas from '@components/ThreeCanvas'
 
 function App() {
   const { ErrorBoundary, didCatch, error } = useErrorBoundary()
@@ -10,7 +11,9 @@ function App() {
   ) : (
     <GlobalStateProvider>
       <div className='app'>
-        <ParticleStormCanvas />
+        <ThreeCanvas showState={true}>
+          <ParticleSphere />
+        </ThreeCanvas>
       </div>
     </GlobalStateProvider>
   )

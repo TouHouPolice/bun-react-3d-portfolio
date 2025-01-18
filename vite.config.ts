@@ -6,7 +6,10 @@ import glsl from 'vite-plugin-glsl';
 export default defineConfig({
   plugins: [
     react(),
-    glsl(),
+    glsl({
+      warnDuplicatedImports: false,
+      compress: false
+    }),
   ],
   resolve: {
     alias: {
