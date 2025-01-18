@@ -1,25 +1,32 @@
 import * as THREE from 'three'
-import { useMemo, useState, useRef } from 'react'
-import { createPortal, useFrame } from '@react-three/fiber'
+import { useMemo, useState, useRef, useContext } from 'react'
+import { createPortal, useFrame, useThree } from '@react-three/fiber'
 import { useFBO } from '@react-three/drei'
 import './DofPointsMaterial'
 import './SimulationMaterial'
+import { GlobalStateContext } from '@context/GlobalStateProvider'
+import { UnprojectPointer } from '@utils/utils'
 
 interface ParticlesProps {
-  speed: number;
-  fov: number;
-  aperture: number;
-  focus: number;
-  curl: number;
-  size?: number;
+    speed: number;
+    fov: number;
+    aperture: number;
+    focus: number;
+    curl: number;
+    size?: number;
+    opacity?: number;
+    expelStrength: number;
 }
 
-export function Particles({ speed, fov, aperture, focus, curl, size = 512, ...props }: ParticlesProps) {
+export function Particles({ speed, fov, aperture, focus, curl, size = 512, opacity = 1.0, expelStrength, ...props }: ParticlesProps) {
+  const { pointerCanvasPos } = useContext(GlobalStateContext);
+  // Get the main cam
+const { camera } = useThree()
   const simRef = useRef<simulationMaterial | null>()
   const renderRef = useRef<dofPointsMaterial | null>()
   // Set up FBO
   const [scene] = useState(() => new THREE.Scene())
-  const [camera] = useState(() => new THREE.OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1))
+  const [orthCamera] = useState(() => new THREE.OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1))
   const [positions] = useState(() => new Float32Array([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]))
   const [uvs] = useState(() => new Float32Array([0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0]))
   const target = useFBO(size, size, {
@@ -39,19 +46,25 @@ export function Particles({ speed, fov, aperture, focus, curl, size = 512, ...pr
     }
     return particles
   }, [size])
+
+  const gravityPos = useMemo(() => UnprojectPointer(pointerCanvasPos, orthCamera), [pointerCanvasPos])
+
   // Update FBO and pointcloud every frame
   useFrame((state) => {
     state.gl.setRenderTarget(target)
     state.gl.clear()
-    state.gl.render(scene, camera)
+    state.gl.render(scene, orthCamera)
     state.gl.setRenderTarget(null)
     renderRef.current.uniforms.positions.value = target.texture
     renderRef.current.uniforms.uTime.value = state.clock.elapsedTime
     renderRef.current.uniforms.uFocus.value = THREE.MathUtils.lerp(renderRef.current.uniforms.uFocus.value, focus, 0.1)
     renderRef.current.uniforms.uFov.value = THREE.MathUtils.lerp(renderRef.current.uniforms.uFov.value, fov, 0.1)
     renderRef.current.uniforms.uBlur.value = THREE.MathUtils.lerp(renderRef.current.uniforms.uBlur.value, (5.6 - aperture) * 9, 0.1)
+    renderRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(renderRef.current.uniforms.uOpacity.value, opacity, 0.1)
     simRef.current.uniforms.uTime.value = state.clock.elapsedTime * speed
     simRef.current.uniforms.uCurlFreq.value = THREE.MathUtils.lerp(simRef.current.uniforms.uCurlFreq.value, curl, 0.1)
+    simRef.current.uniforms.uAntiGravityStrength.value = THREE.MathUtils.lerp(simRef.current.uniforms.uAntiGravityStrength.value, expelStrength, 0.1)
+    simRef.current.uniforms.uAntiGravityPos.value = simRef.current.uniforms.uAntiGravityPos.value.lerp(gravityPos, 0.1)
   })
   return (
     <>

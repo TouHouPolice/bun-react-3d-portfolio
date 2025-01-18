@@ -6,7 +6,7 @@
 #endif
 
 uniform sampler2D positions;
-uniform float uTime;
+// uniform float uTime;
 uniform float uFocus;
 uniform float uFov;
 uniform float uBlur;

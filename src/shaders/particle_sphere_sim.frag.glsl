@@ -8,6 +8,8 @@
 uniform sampler2D positions;
 uniform float uTime;
 uniform float uCurlFreq;
+uniform vec3 uAntiGravityPos;
+uniform float uAntiGravityStrength;
 in vec2 vUv;
 
 #include "../../node_modules/lygia/generative/curl.glsl"
@@ -15,13 +17,30 @@ in vec2 vUv;
 
 void main() {
     float t = uTime * 0.015;
-    vec3 pos = texture(positions, vUv).rgb; // basic simulation: displays the particles in place.
-    vec3 curlPos = texture(positions, vUv).rgb;
-    pos = curl(pos * uCurlFreq + t);
-    curlPos = curl(curlPos * uCurlFreq + t);
-    curlPos += curl(curlPos * uCurlFreq * 2.0) * 0.5;
-    curlPos += curl(curlPos * uCurlFreq * 4.0) * 0.25;
-    curlPos += curl(curlPos * uCurlFreq * 8.0) * 0.125;
-    curlPos += curl(pos * uCurlFreq * 16.0) * 0.0625;
-    gl_FragColor = vec4(mix(pos, curlPos, cnoise(pos + t)), 1.0);
+
+    // 1) Read current position from the texture
+    vec3 pos = texture(positions, vUv).rgb;
+    // 2) Apply curl-based movement
+    vec3 basePos = curl(pos * uCurlFreq + t);
+    vec3 curlPos = basePos;
+    curlPos += curl(curlPos * uCurlFreq *  2.0) * 0.5;
+    curlPos += curl(curlPos * uCurlFreq *  4.0) * 0.25;
+    curlPos += curl(curlPos * uCurlFreq *  8.0) * 0.125;
+    curlPos += curl(basePos * uCurlFreq * 16.0) * 0.0625;
+
+    vec3 finalPos = vec3(mix(basePos, curlPos, cnoise(basePos + t)));
+
+    vec3 dir = finalPos - uAntiGravityPos;
+    float dist = length(dir);
+
+    // define your falloff
+    // e.g. force = strength / (dist + small_epsilon)
+    float force = uAntiGravityStrength / (dist + 0.001);
+    force = clamp(force, 0.0, uAntiGravityStrength); // or clamp further if desired
+
+    // push away
+    finalPos += normalize(dir) * force;
+
+    // output new position
+    gl_FragColor = vec4(finalPos, 1.0);
 }
