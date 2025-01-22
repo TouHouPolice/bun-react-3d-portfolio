@@ -1,8 +1,7 @@
 
 import { CameraShake, OrbitControls } from '@react-three/drei';
 import { useControls } from 'leva';
-import { useEffect } from 'react';
-import { Particles } from './Particles';
+import Particles from './Particles';
 
 
 

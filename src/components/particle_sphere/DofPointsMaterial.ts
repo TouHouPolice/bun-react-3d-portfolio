@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { extend } from '@react-three/fiber'
+import { MaterialNode } from '@react-three/fiber'
 import DofPointsVert from '@shaders/dof_points.vert.glsl';
 import DofPointsFrag from '@shaders/dof_points.frag.glsl';
 import { PreprocessGLSLForThree } from '@utils/utils';
@@ -7,7 +7,7 @@ import { PreprocessGLSLForThree } from '@utils/utils';
 const pointsVert: string = PreprocessGLSLForThree(DofPointsVert);
 const pointsFrag: string = PreprocessGLSLForThree(DofPointsFrag);
 
-class DofPointsMaterial extends THREE.ShaderMaterial {
+export default class DofPointsMaterial extends THREE.ShaderMaterial {
   constructor() {
     super({
       vertexShader: pointsVert,
@@ -27,4 +27,11 @@ class DofPointsMaterial extends THREE.ShaderMaterial {
   }
 }
 
-extend({ DofPointsMaterial })
+declare module '@react-three/fiber' {
+  interface ThreeElements {
+    dofPointsMaterial: MaterialNode<DofPointsMaterial, typeof DofPointsMaterial>
+  }
+}
+
+
+
