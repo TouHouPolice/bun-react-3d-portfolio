@@ -22,6 +22,8 @@ interface ParticlesProps {
     expelStrength: number;
 }
 
+const defaultPositions = [-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]
+
 export default function Particles({ speed, fov, aperture, focus, curl, size = 512, opacity = 1.0, expelStrength, ...props }: ParticlesProps) {
     const { pointerCanvasPos } = useContext(GlobalStateContext);
     // Get the main cam
@@ -30,9 +32,10 @@ export default function Particles({ speed, fov, aperture, focus, curl, size = 51
     const renderRef = useRef<DofPointsMaterial>(null!)
     // Set up FBO
     const [scene] = useState(() => new THREE.Scene())
-    const [orthCamera] = useState(() => new THREE.OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1))
-    const [positions] = useState(() => new Float32Array([-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]))
+    const [orthCamera] = useState(() => new THREE.OrthographicCamera(-1, 1, 1, -1, 1 / Math.pow(2, 53), 1))    
     const [uvs] = useState(() => new Float32Array([0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0]))
+    const [positions] = useState(() => new Float32Array(defaultPositions))
+
     const target = useFBO(size, size, {
     minFilter: THREE.NearestFilter,
     magFilter: THREE.NearestFilter,
@@ -80,7 +83,8 @@ export default function Particles({ speed, fov, aperture, focus, curl, size = 51
     <>
         {/* Simulation goes into a FBO/Off-buffer */}
         {createPortal(
-        <mesh>
+        <mesh
+        >
             <simulationMaterial ref={simRef} />
             <bufferGeometry>
                 <bufferAttribute 
