@@ -3,13 +3,14 @@ import { GlobalStateProvider } from "@context/GlobalStateProvider"
 import { useErrorBoundary } from 'use-error-boundary'
 // import ParticleSphere from '@components/particle_sphere/ParticleSphere'
 import ThreeCanvas from '@components/ThreeCanvas'
-import React, { Suspense, useRef } from 'react'
+import React, { Suspense } from 'react'
 import { CameraShake, OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { Vector3 } from 'three'
 import { useControls } from 'leva'
+import PostProc from '@components/PostProc'
 
 
 const AsyncParticleSphere = React.lazy(() => import('@components/particle_sphere/ParticleSphere'))
+const AsyncCityModel = React.lazy(() => import('@components/CityModel'))
 
 function App() {
   const { didCatch, error } = useErrorBoundary()
@@ -34,10 +35,14 @@ function App() {
           zoomSpeed={1}
           onChange={(e) => console.log(e)}
           />
-          <CameraShake yawFrequency={1} maxYaw={0.05} pitchFrequency={1} maxPitch={0.05} rollFrequency={0.5} maxRoll={0.5} intensity={0.2} />
+          <CameraShake yawFrequency={1} maxYaw={0.03} pitchFrequency={0.2} maxPitch={0.03} rollFrequency={0.5} maxRoll={0.3} intensity={0.2} />
+          <Suspense fallback={null}>
+            <AsyncCityModel />
+          </Suspense>
           <Suspense fallback={null}>
             <AsyncParticleSphere />
           </Suspense>
+          <PostProc/>
         </ThreeCanvas>
         {/* Some placeholder to show that other components are loaded first */}
         <div className='placeholder' style={{ position: 'absolute', top: 0, left: 0, zIndex: 100, color: 'white' }}>

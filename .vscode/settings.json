@@ -4,7 +4,10 @@
         "glsl",
         "glslify",
         "highp",
+        "lerp",
+        "Scanlines",
         "tseslint",
+        "Unproject",
         "webgpu"
     ],
     "glsllint.additionalStageAssociations": {

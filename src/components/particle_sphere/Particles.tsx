@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useMemo, useState, useRef, useContext } from 'react'
+import { useMemo, useState, useRef, useContext, useEffect } from 'react'
 import { createPortal, extend, useFrame } from '@react-three/fiber'
 import { useFBO } from '@react-three/drei'
 import DofPointsMaterial from './DofPointsMaterial'
@@ -12,6 +12,7 @@ import { UnprojectPointer } from '@utils/utils'
 extend({ DofPointsMaterial, SimulationMaterial })
 
 interface ParticlesProps {
+    color: string;
     speed: number;
     fov: number;
     aperture: number;
@@ -24,7 +25,7 @@ interface ParticlesProps {
 
 const defaultPositions = [-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]
 
-export default function Particles({ speed, fov, aperture, focus, curl, size = 512, opacity = 1.0, expelStrength, ...props }: ParticlesProps) {
+export default function Particles({ color, speed, fov, aperture, focus, curl, size = 512, opacity = 1.0, expelStrength, ...props }: ParticlesProps) {
     const { pointerCanvasPos } = useContext(GlobalStateContext);
     // Get the main cam
     //const { camera } = useThree()
@@ -63,7 +64,14 @@ export default function Particles({ speed, fov, aperture, focus, curl, size = 51
         gl.setRenderTarget(null)
     }
 
-    // Update FBO and pointcloud every frame
+    useEffect(() => {
+        if (renderRef.current) {
+            const c = new THREE.Color(color)
+            renderRef.current.uniforms.uColor.value = new THREE.Vector4(c.r, c.g, c.b, 1)
+        }
+    }, [renderRef, color])
+
+    // Update FBO and point cloud every frame
     useFrame((state) => {
         simulateParticles(state.gl)
 
@@ -73,6 +81,7 @@ export default function Particles({ speed, fov, aperture, focus, curl, size = 51
         renderRef.current.uniforms.uFov.value = THREE.MathUtils.lerp(renderRef.current.uniforms.uFov.value, fov, 0.1)
         renderRef.current.uniforms.uBlur.value = THREE.MathUtils.lerp(renderRef.current.uniforms.uBlur.value, (5.6 - aperture) * 9, 0.1)
         renderRef.current.uniforms.uOpacity.value = THREE.MathUtils.lerp(renderRef.current.uniforms.uOpacity.value, opacity, 0.1)
+
         simRef.current.uniforms.uTime.value = state.clock.elapsedTime * speed
         simRef.current.uniforms.uCurlFreq.value = THREE.MathUtils.lerp(simRef.current.uniforms.uCurlFreq.value, curl, 0.1)
         simRef.current.uniforms.uAntiGravityStrength.value = THREE.MathUtils.lerp(simRef.current.uniforms.uAntiGravityStrength.value, expelStrength, 0.1)
@@ -102,7 +111,7 @@ export default function Particles({ speed, fov, aperture, focus, curl, size = 51
         </mesh>,
         scene
         )}
-        {/* The result of which is forwarded into a pointcloud via data-texture */}
+        {/* The result of which is forwarded into a point cloud via data-texture */}
         <points {...props}>
         <dofPointsMaterial ref={renderRef} />
         <bufferGeometry>

@@ -6,6 +6,7 @@ import Particles from './Particles';
 
 export default function ParticleSphere(){
     const props = useControls({
+        color: { value: '#7caecc' },
         focus: { value: 4.64, min: 0, max: 7, step: 0.01 },
         speed: { value: 17.5, min: 0.1, max: 100, step: 0.1 },
         aperture: { value: 5.0, min: 1, max: 5.6, step: 0.1 },
