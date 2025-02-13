@@ -18,6 +18,7 @@ export default defineConfig({
       '@shaders': path.resolve(__dirname, 'src/shaders'),
       '@context': path.resolve(__dirname, 'src/context'),
       '@assets': path.resolve(__dirname, 'src/assets'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
       // Add more aliases as needed
     },
   },

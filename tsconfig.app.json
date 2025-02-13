@@ -29,6 +29,7 @@
       "@shaders/*": ["src/shaders/*"],
       "@context/*": ["src/context/*"],
       "@assets/*": ["src/assets/*"],
+      "@styles/*": ["src/styles/*"],
     },
     "types": [
       "node",

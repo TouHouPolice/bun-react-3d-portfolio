@@ -1,14 +1,12 @@
 import './styles/main.scss'
 import { GlobalStateProvider } from "@context/GlobalStateProvider"
 import { useErrorBoundary } from 'use-error-boundary'
-// import ParticleSphere from '@components/particle_sphere/ParticleSphere'
 import ThreeCanvas from '@components/ThreeCanvas'
 import React, { Suspense } from 'react'
 import { CameraShake, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { useControls } from 'leva'
 import PostProc from '@components/PostProc'
-
-
+import ScifiBackground from '@components/ScifiBackground'
 const AsyncParticleSphere = React.lazy(() => import('@components/particle_sphere/ParticleSphere'))
 const AsyncCityModel = React.lazy(() => import('@components/CityModel'))
 
@@ -20,9 +18,13 @@ function App() {
   return didCatch ? (
     <div>{error.message}</div>
   ) : (
+    <>
     <GlobalStateProvider>
       <div className='app'>
-        <ThreeCanvas showState={true}>
+        <ScifiBackground />
+        <ThreeCanvas 
+        className="main-canvas"
+        showState={true}>
           <PerspectiveCamera 
           makeDefault 
           position={[0, 0, 5]} 
@@ -44,12 +46,9 @@ function App() {
           </Suspense>
           <PostProc/>
         </ThreeCanvas>
-        {/* Some placeholder to show that other components are loaded first */}
-        <div className='placeholder' style={{ position: 'absolute', top: 0, left: 0, zIndex: 100, color: 'white' }}>
-          <h1>Some placeholder to show that other components are loaded first</h1>
-        </div>
       </div>
     </GlobalStateProvider>
+    </>
   )
 }
 

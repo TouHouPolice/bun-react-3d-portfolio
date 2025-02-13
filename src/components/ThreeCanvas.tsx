@@ -5,7 +5,7 @@ import { ReactNode, useContext } from "react";
 
 // A wrapper for the Canvas component from @react-three/fiber
 export default function ThreeCanvas(
-    { children, showState }: { children: ReactNode, showState?: boolean },
+    { children, showState, className, style }: { children: ReactNode, showState?: boolean, className?: string, style?: React.CSSProperties },
 ) {
     const { setPointerCanvasPos: setMouseCanvasPos } = useContext(GlobalStateContext)
     const handlePointerMove = (event: any) => {
@@ -15,6 +15,8 @@ export default function ThreeCanvas(
 
     return (
     <Canvas
+        className={className?.trim()}
+        style={style}
         onPointerMove={handlePointerMove}
         fallback={<div>Sorry no WebGL supported!</div>}
     >
