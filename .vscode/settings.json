@@ -16,5 +16,6 @@
     "glsllint.additionalStageAssociations": {
         ".frag": "frag",
         ".vert": "vert"
-    }
+    },
+    "cSpell.enabled": false
 }

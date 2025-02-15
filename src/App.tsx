@@ -12,7 +12,7 @@ import MainOverlay from '@components/MainOverlay'
 const AsyncParticleSphere = React.lazy(() => import('@components/particle_sphere/ParticleSphere'))
 const AsyncCityModel = React.lazy(() => import('@components/CityModel'))
 
-const LOAD_CANVAS = true
+const LOAD_CANVAS = false
 
 function App() {
   const { didCatch, error } = useErrorBoundary()
