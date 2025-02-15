@@ -7,7 +7,7 @@ import { ReactNode, useContext } from "react";
 export default function ThreeCanvas(
     { children, showState, className, style }: { children: ReactNode, showState?: boolean, className?: string, style?: React.CSSProperties },
 ) {
-    const { setPointerCanvasPos: setMouseCanvasPos } = useContext(GlobalStateContext)
+    const { setMousePos: setMouseCanvasPos } = useContext(GlobalStateContext)
     const handlePointerMove = (event: any) => {
         const e = event as ThreeEvent<PointerEvent>
         setMouseCanvasPos({ x: e.clientX, y: e.clientY })

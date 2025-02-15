@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useTexture, useGLTF } from "@react-three/drei";
+import { useTexture, useGLTF, Preload } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 
@@ -12,6 +12,7 @@ title: Red City
 */
 export default function CityModel() {
     const group = useRef<THREE.Group>(null!)
+
     const { nodes, materials } = useGLTF('/scene-draco.glb')
     const blueTexture = useTexture('/base_blue.jpg')
 
@@ -23,11 +24,14 @@ export default function CityModel() {
 
     useFrame(() => {
         if (!group.current) return
-        group.current.rotation.y += 0.0001
+        group.current.rotation.y += 0.0003
     })
+
+    if (!nodes || !materials) return null
+
     return (
     <>
-      <group ref={group} scale={0.001} position={[0, -5, -100]} dispose={null}>
+      <group ref={group} scale={0.001} position={[0, -5, -150]} dispose={null}>
         <group rotation={[-Math.PI / 2, 0, 0]}>
           <group position={[-102253.52, -210688.86, -17050.52]}>
             <mesh material={materials.Scene_Root} geometry={(nodes.mesh_0 as THREE.Mesh).geometry} />
@@ -44,3 +48,5 @@ export default function CityModel() {
       </>
     )
   }
+
+  useGLTF.preload('/scene-draco.glb')

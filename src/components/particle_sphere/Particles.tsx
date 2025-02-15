@@ -26,7 +26,7 @@ interface ParticlesProps {
 const defaultPositions = [-1, -1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0]
 
 export default function Particles({ color, speed, fov, aperture, focus, curl, size = 512, opacity = 1.0, expelStrength, ...props }: ParticlesProps) {
-    const { pointerCanvasPos } = useContext(GlobalStateContext);
+    const { mousePos } = useContext(GlobalStateContext);
     // Get the main cam
     //const { camera } = useThree()
     const simRef = useRef<SimulationMaterial>(null!)
@@ -43,7 +43,7 @@ export default function Particles({ color, speed, fov, aperture, focus, curl, si
     format: THREE.RGBAFormat,
     type: THREE.FloatType
     })
-    const gravityPos = useMemo(() => UnprojectPointer(pointerCanvasPos, orthCamera), [pointerCanvasPos])
+    const gravityPos = useMemo(() => UnprojectPointer(mousePos, orthCamera), [mousePos])
 
     //Normalize points
     const particles = useMemo(() => {
