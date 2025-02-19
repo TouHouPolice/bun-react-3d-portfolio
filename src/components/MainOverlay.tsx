@@ -12,7 +12,7 @@ export default function MainOverlay() {
             <div className="main-overlay">
                 <Routes>
                     <Route path="/" element={<Welcome/>} />
-                    <Route path="/profile" element={<Profile/>}/>
+                    <Route path="/profile/*" element={<Profile/>}/>
                 </Routes>
             </div>
         </BleepsProvider>
