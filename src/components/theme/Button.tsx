@@ -5,9 +5,11 @@ import {
     Animator, Text
 } 
 from "@arwes/react"
+import { Illuminator } from '@arwes/react-effects'
 import { theme } from "@styles/Arwes"
 import { memo, ReactNode, useRef } from "react"
 import { BleepsNames } from "@styles/Arwes"
+import { addStyles } from "@utils/utils"
 type ButtonProps = {
     className?: string
     style?: React.CSSProperties
@@ -42,9 +44,9 @@ const ThemeButton = memo((props: ButtonProps): JSX.Element => {
                     onClick?.(event)
                 }}
                 >
-                 {/* <div className="theme-button-back">
-                    <EffectIlluminator size={theme.spacen(50)} color={theme.color[color](3, { alpha: 0.2 })} />
-                </div>  */}
+                 <div className="theme-button-back">
+                    <Illuminator size={theme.spacen(50)} color={theme.color[color](3, { alpha: 0.2 })} />
+                </div> 
                 <FrameOctagon elementRef={frameRef} style={{ zIndex: 0 }} squareSize={theme.spacen(2)} />
                 <Text as="div" className="theme-button-content">
                     {children}
@@ -57,11 +59,7 @@ const ThemeButton = memo((props: ButtonProps): JSX.Element => {
 
 export default ThemeButton
 
-const addStyles = (css: string) => {
-const style = document.createElement('style')
-style.innerHTML = css
-document.body.appendChild(style)
-}
+
 
 addStyles(`
 .theme-button {
@@ -99,6 +97,10 @@ addStyles(`
     justify-content: center;
     align-items: center;
     gap: ${theme.space(2)};
+}
+
+.theme-button:hover .theme-button-content{
+    color: ${theme.color.secondary(4)};
 }
 
 .theme-button .arwes-frames-framesvg {

@@ -43,7 +43,7 @@ const themeStructure: ThemeCreatorStructure = {
   font: 'style',
   color: {
     primary: 'color',
-    secondary: 'color'
+    secondary: 'color',
   }
 }
 
@@ -63,7 +63,7 @@ const themeDefaults: ThemeSettings = {
     // A function to return a HSLA value as [number, number, number, number?].
     // The colors go from light to dark.
     primary: (i) => [180, 60 + i, 92.5 - i * 9.44],
-    secondary: (i) => [60, 60 + i, 92.5 - i * 9.44]
+    secondary: (i) => [60, 60 + i, 92.5 - i * 9.44],
   }
 }
 

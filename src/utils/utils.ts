@@ -12,3 +12,9 @@ export function UnprojectPointer(pointerPos: { x: number, y: number }, camera: T
     // Unproject
     return new THREE.Vector3(x, y, 0).unproject(camera);
 }
+
+export const addStyles = (css: string) => {
+    const style = document.createElement('style')
+    style.innerHTML = css
+    document.body.appendChild(style)
+}
