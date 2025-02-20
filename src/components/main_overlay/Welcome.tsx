@@ -1,9 +1,9 @@
-import {Animator, Text } from "@arwes/react";
+import {Animator} from "@arwes/react";
 import {theme} from '@styles/Arwes'
 import ThemeButton from "@components/theme/Button";
 import Frame, { FrameType } from "@components/theme/Frame";
 import { useNavigate } from "react-router-dom";
-
+import Text from "@components/theme/Text";
 interface WelcomeProps {
 }
 

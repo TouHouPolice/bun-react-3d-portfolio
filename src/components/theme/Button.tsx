@@ -2,7 +2,7 @@ import {
     Animated, AnimatedProp, cx, 
     styleFrameClipOctagon, 
     useBleeps, useFrameAssembler, FrameOctagon,
-    Animator, Text
+    Animator
 } 
 from "@arwes/react"
 import { Illuminator } from '@arwes/react-effects'
@@ -10,6 +10,7 @@ import { theme } from "@styles/Arwes"
 import { memo, ReactNode, useRef } from "react"
 import { BleepsNames } from "@styles/Arwes"
 import { addStyles } from "@utils/utils"
+import Text from "./Text"
 type ButtonProps = {
     className?: string
     style?: React.CSSProperties

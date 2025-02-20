@@ -1,11 +1,11 @@
-import { Animator, AnimatorDuration, Text } from "@arwes/react";
+import { Animator, AnimatorDuration } from "@arwes/react";
 import Frame, { FrameType } from "@components/theme/Frame";
 import {theme} from "@styles/Arwes";
 import { addStyles } from "@utils/utils";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { sub } from "three/webgpu";
-
+import Text
+ from "@components/theme/Text";
 type SidebarItemProps = {
     label: string,
     duration?: Partial<AnimatorDuration>,

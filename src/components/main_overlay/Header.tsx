@@ -1,8 +1,9 @@
 import Frame, { FrameType } from "@components/theme/Frame";
 import { Col, Row } from "react-bootstrap";
-import { Animated, Animator, Text } from "@arwes/react";
+import { Animated, Animator } from "@arwes/react";
 import { theme } from "@styles/Arwes";
 import { useEffect, useState } from "react";
+import Text from "@components/theme/Text";
 
 export default function Header(){
     const [iconComponents, setIconComponents] = useState();
