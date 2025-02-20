@@ -4,13 +4,13 @@ import { Animated, Animator } from "@arwes/react";
 import { theme } from "@styles/Arwes";
 import { useEffect, useState } from "react";
 import Text from "@components/theme/Text";
-import { addStyles } from "@utils/utils";
+import { addStyles, getAssetPath } from "@utils/utils";
 
 export default function Header(){
     const [iconComponents, setIconComponents] = useState();
 
     useEffect(() => {
-        fetch('/resources/header_icons.json')
+        fetch(getAssetPath('/resources/header_icons.json'))
             .then(response => response.json())
             .then(data => {
                 const components = data.map((icon: { font_awesome: string, url: string }, index: number) => {

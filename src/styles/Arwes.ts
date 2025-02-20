@@ -13,6 +13,7 @@ import {
   createThemeMultiplier,
   createThemeUnit
 } from '@arwes/theme'
+import { getAssetPath } from '@utils/utils'
 
 interface ThemeSettings {
   space: ThemeSettingsUnit
@@ -87,19 +88,19 @@ const bleepsSettings: BleepsProviderSettings<BleepsNames> = {
       hover: {
         category: 'background',
         sources: [
-            { src: '/assets/sounds/hover.webm', type: 'audio/webm' }
+            { src: getAssetPath('/assets/sounds/hover.webm'), type: 'audio/webm' }
         ]
       },
       click: {
         category: 'interaction',
         sources: [
-            { src: '/assets/sounds/click.webm', type: 'audio/webm' }
+            { src: getAssetPath('/assets/sounds/click.webm'), type: 'audio/webm' }
         ],
       },
       type: {
           category: 'background',
           sources: [
-              { src: '/assets/sounds/type.mp3', type: 'audio/mpeg' }
+              { src: getAssetPath('/assets/sounds/type.mp3'), type: 'audio/mpeg' }
           ]
       }
 

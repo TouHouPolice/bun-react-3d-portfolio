@@ -2,10 +2,10 @@ import * as THREE from 'three'
 import { MaterialNode } from '@react-three/fiber'
 import ParticleSphereSimVert from '@shaders/particle_sphere_sim.vert.glsl';
 import ParticleSphereSimFrag from '@shaders/particle_sphere_sim.frag.glsl';
-import { PreprocessGLSLForThree } from '@utils/utils';
+import { preprocessGLSLForThree } from '@utils/utils';
 
-const simVert: string = PreprocessGLSLForThree(ParticleSphereSimVert);
-const simFrag: string = PreprocessGLSLForThree(ParticleSphereSimFrag);
+const simVert: string = preprocessGLSLForThree(ParticleSphereSimVert);
+const simFrag: string = preprocessGLSLForThree(ParticleSphereSimFrag);
 
 function getPoint(v: THREE.Vector4, size: number, data: Float32Array, offset: number) {
     const theta = Math.random() * 2 * Math.PI; // Random angle in [0, 2π]

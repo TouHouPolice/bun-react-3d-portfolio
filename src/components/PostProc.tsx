@@ -1,5 +1,6 @@
 import { Effects } from "@react-three/drei"
 import { extend, Object3DNode, useFrame, useLoader, useThree } from "@react-three/fiber"
+import { getAssetPath } from "@utils/utils"
 import { useControls } from "leva"
 import { useRef } from "react"
 import { Vector2 } from "three"
@@ -19,7 +20,7 @@ declare module '@react-three/fiber' {
 
 export default function PostProc() {
     const water = useRef<WaterPass>(null!)
-    const data = useLoader(LUTCubeLoader, '/cubicle.CUBE')
+    const data = useLoader(LUTCubeLoader, getAssetPath('/cubicle.CUBE'))
     // Get canvas width and height, useThree
     const { size } = useThree()
 

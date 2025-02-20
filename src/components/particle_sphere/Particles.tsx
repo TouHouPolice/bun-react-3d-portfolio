@@ -7,7 +7,7 @@ import SimulationMaterial from './SimulationMaterial'
 // import './DofPointsMaterial'
 // import './SimulationMaterial'
 import { GlobalStateContext } from '@context/GlobalStateProvider'
-import { UnprojectPointer } from '@utils/utils'
+import { unprojectPointer } from '@utils/utils'
 
 extend({ DofPointsMaterial, SimulationMaterial })
 
@@ -43,7 +43,7 @@ export default function Particles({ color, speed, fov, aperture, focus, curl, si
     format: THREE.RGBAFormat,
     type: THREE.FloatType
     })
-    const gravityPos = useMemo(() => UnprojectPointer(mousePos, orthCamera), [mousePos])
+    const gravityPos = useMemo(() => unprojectPointer(mousePos, orthCamera), [mousePos])
 
     //Normalize points
     const particles = useMemo(() => {

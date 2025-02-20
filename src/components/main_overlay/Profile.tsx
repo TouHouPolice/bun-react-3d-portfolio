@@ -7,11 +7,12 @@ import Sidebar from "./Profile/Sidebar";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Project from "./Profile/Project";
+import { getAssetPath } from "@utils/utils";
 
 export default function Profile() {
     const [profileData, setProfileData] = useState();
     useEffect(() => {
-        fetch('/resources/profile_data.json')
+        fetch(getAssetPath('/resources/profile_data.json'))
             .then(response => response.json())
             .then(data => {
                 setProfileData(data)

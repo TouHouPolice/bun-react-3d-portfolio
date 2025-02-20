@@ -6,6 +6,7 @@ import { theme } from "@styles/Arwes";
 import { Animated } from "@arwes/react";
 import Frame, { FrameType } from "@components/theme/Frame";
 import SciFiCarousel from "./ScifiCarousel";
+import { getAssetPath } from "@utils/utils";
 
 type ProjectData = {
     description: string;
@@ -20,7 +21,7 @@ type ProjectProps = {
     projectsData?: Array<ProjectData>,
 }
 
-const RESOURCE_DIR_ROOT = "/resources/projects/";
+const RESOURCE_DIR_ROOT = getAssetPath("/resources/projects/");
 
 
 export default function Project( {projectsData}: ProjectProps ) {
