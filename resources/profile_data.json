@@ -6,7 +6,30 @@
       "demo_url": "https://www.youtube.com/embed/FgSynxVs4bs?si=vyqSrtqQchW6AO6f",
       "resource_directory": "3d_game_engine",
       "link": null,
-      "screenshots": []
+      "screenshots": [
+        "Skew_Editor_Screenshot_01.png",
+        "Skew_Editor_Screenshot_02.png",
+        "Skew_Editor_Screenshot_03.png",
+        "Skew_Editor_Screenshot_04.png",
+        "Skew_Editor_Screenshot_05.png"
+      ]
+    },
+    {
+      "label": "Skew (3D Game)",
+      "description": "Skew is a 3D game developed with our custom 3D game engine. It's a first-person hack-and-slash game with a unique mechanic where players eat enemies to gain power. Playing as the protagonist, players must find a way to escape after a disatrous event which led to the crash of her spaceship.",
+      "demo_url": "https://www.youtube.com/embed/XW0fHFbB498?si=rR9lGhLLbMWC8WqJ",
+      "resource_directory": "skew",
+      "link": null,
+      "screenshots": [
+        "Skew_MainImage.png.png",
+        "Skew_Screenshot_01.png",
+        "Skew_Screenshot_02.png",
+        "Skew_Screenshot_03.png",
+        "Skew_Screenshot_04.png",
+        "Skew_Screenshot_05.png",
+        "Skew_Screenshot_06.png",
+        "Skew_Screenshot_07.png"
+      ]
     },
     {
       "label": "2D Game Engine",
