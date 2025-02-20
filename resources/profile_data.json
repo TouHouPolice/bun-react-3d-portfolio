@@ -1,0 +1,114 @@
+{
+  "projects": [
+    {
+      "label": "3D Game Engine",
+      "description": "After finishing the 2D game engine project, we ventured into 3D game engine development. I was always fascinated by 3D computer graphics, so I took the role of Graphics Lead. The graphics API we decided to use is Vulkan, it is the most trendy graphics API at the moment and therefore it is the most beneficial to learn. Although it is much more complex than OpenGL, but I adapted to Vulkan Programming with early preparation and countless hours of learning.",
+      "demo_url": "https://www.youtube.com/embed/FgSynxVs4bs?si=vyqSrtqQchW6AO6f",
+      "resource_directory": "3d_game_engine",
+      "link": null,
+      "screenshots": []
+    },
+    {
+      "label": "2D Game Engine",
+      "description": "My first game engine project was a challenging but rewarding experience. The goal was to create a game engine with 2D graphics and a custom editor. The engine had to support all the essential features for making a 2D game. As one of the most experienced programmers and game developers in the team, I took the lead in product management and code contribution. The project felt like exploring an unknown territory since none of us had any prior game engine development experience. I spent the trimester break learning as much as I could about game engine development. I found some useful resources that helped me understand key concepts such as OpenGL programming and Entity Component Systems (ECS). The development was a wild ride, but by constantly challenging ourselves, we managed to deliver what exceeded our initial expectation.",
+      "demo_url": "https://www.youtube.com/embed/IbneiGRJ1c0?si=zzRQwoQGEDFlX-pc",
+      "resource_directory": "2d_game_engine",
+      "link": null,
+      "screenshots": [
+        "1.jpg",
+        "2.jpg"
+      ]
+    },
+    {
+      "label": "Autonomous Surveillance Drone",
+      "description": "This drone project was developed under Hitachi Asia as an intern. The presumed client would be the Singapore government, especially the police force. The final product is capable of human detection and tracking, receiving remote commands from a ground control station and perform autonomous navigation. Only few of the details can be shared due to confidential reasons.",
+      "demo_url": null,
+      "resource_directory": "autonomous_surveillance_drone",
+      "link": null,
+      "screenshots": [
+        "1.png",
+        "2.png",
+        "3.png"
+      ]
+    },
+    {
+      "label": "BVH Demo",
+      "description": "A demo featuring how to use bouding volume hierarchy for rendering optimization. Three methods are implemented: Topdown, Insert and bottomup.",
+      "demo_url": "https://www.youtube.com/embed/0r880dkAshw?si=5p0b2lIPe9-BfNk7",
+      "resource_directory": "bvh_demo",
+      "link": null,
+      "screenshots": []
+    },
+    {
+      "label": "Octree Demo",
+      "description": "A demo featuring how Octree can greatly optmize physics simulation. The demo shows how to use Octree to optimize collision detection.",
+      "demo_url": "https://www.youtube.com/embed/xpfSwbC3-gY?si=Z4_CCl3AHmeqMZ-a",
+      "resource_directory": "octree_demo",
+      "link": null,
+      "screenshots": []
+    },
+    {
+      "label": "Herald (2D Game)",
+      "description": "We developed the game with our custom 2D game engine. The game is a survival challenge against waves of enemies and bosses. The players have to choose the right combination of ally minions to succeed. The engine supports Mono C# scripting, which we used for all the game logic. I was responsible for the program architecture and code integration. I also helped my team members with C# whenever they needed it.",
+      "demo_url": "https://www.youtube.com/embed/US6NZfotw1s?si=Atc78cukE_Xj53o9",
+      "resource_directory": "herald",
+      "link": null,
+      "screenshots": [
+        "1.jpg",
+        "2.jpg",
+        "3.jpg"
+      ]
+    },
+    {
+      "label": "Object Tracking (OpenCV & YOLO)",
+      "description": "The project demonstrates how to incorporate OpenCV and YOLO to achieve object detection and tracking. The object detection algorithm used was YOLOv5. YOLO is one of the state-of-the-art open-source object detection projects.",
+      "demo_url": "https://www.youtube.com/embed/2VQd6gOp5dQ?si=7JUVt5MOJ-LnEjiC",
+      "resource_directory": "object_tracking",
+      "link": null,
+      "screenshots": [
+        "yolo_1.JPG",
+        "yolo_2.JPG"
+      ]
+    },
+    {
+      "label": "Charity Virtual Tour (Web)",
+      "description": "The Char Kway Teow Legacy Virtual Tour was one of the virtual tours I developed under HOL Experiences. The theme of the virtual tour was about giving. There are a lot of interactive and visual elements added into the virtual tours, like minigames, javascript physics and 3D graphics. The 3D space was created with Matterport. All the programming was done by me, including front-end, back-end and server management.",
+      "demo_url": "https://www.youtube.com/embed/Q0SYASNcphs?si=rbNvOVXlt-Cw1GrQ",
+      "resource_directory": "charity_virtual_tour",
+      "link": "https://nievlc.sg/",
+      "screenshots": [
+        "0.JPG",
+        "1.JPG",
+        "10.JPG",
+        "11.JPG",
+        "12.JPG",
+        "13.JPG",
+        "14.JPG",
+        "2.JPG",
+        "3.JPG",
+        "4.JPG",
+        "5.JPG",
+        "6.JPG",
+        "7.JPG",
+        "8.JPG",
+        "9.JPG"
+      ]
+    },
+    {
+      "label": "NIE Virtual Tour (Web)",
+      "description": "The NIEVLC Virtual Tour was one of the virtual tours I developed under HOL Experiences, and the client was NIE. The virtual tour was to be launched together with the launch of the physical NIE visitor learning centre. All the programming was done by me, including front-end, back-end and server management.",
+      "demo_url": "https://www.youtube.com/embed/UsCwc-a7PQw?si=e3b8_xKXGtWc3cHu",
+      "resource_directory": "nie_virtual_tour",
+      "link": "https://nievlc.sg/",
+      "screenshots": [
+        "NIE_1.JPG",
+        "NIE_2.JPG",
+        "NIE_3.JPG"
+      ]
+    }
+  ],
+  "Background": {
+    "label": "John Doe",
+    "intro": "I am a software engineer"
+  }
+}

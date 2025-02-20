@@ -1,0 +1,21 @@
+{
+    "cSpell.words": [
+        "arwes",
+        "drei",
+        "glsl",
+        "glslify",
+        "highp",
+        "lerp",
+        "Scanlines",
+        "Scifi",
+        "spacen",
+        "tseslint",
+        "Unproject",
+        "webgpu"
+    ],
+    "glsllint.additionalStageAssociations": {
+        ".frag": "frag",
+        ".vert": "vert"
+    },
+    "cSpell.enabled": false
+}
