@@ -18,14 +18,15 @@ const defaultState: GlobalState = {
 export const GlobalStateContext = createContext<GlobalState>(defaultState);
 
 export const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
-  const [allowOrbitControl, setAllowOrbitControl] = useState(true);
+  const mode = import.meta.env.VITE_APP_MODE;
+  const [allowOrbitControl, setAllowOrbitControl] = useState(mode==='dev');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   return (
     <GlobalStateContext.Provider value={{ 
       allowOrbitControl, 
       setAllowOrbitControl,
       mousePos: mousePos,
-      setMousePos: setMousePos
+      setMousePos: setMousePos,
       }}>
       {children}
     </GlobalStateContext.Provider>

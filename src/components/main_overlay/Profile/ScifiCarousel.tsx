@@ -34,18 +34,15 @@ const SciFiCarousel: React.FC<SciFiCarouselProps> = ({ images, styles, className
 
 addStyles(`
 .sci-fi-carousel {
-  background: radial-gradient(circle at center, #1a1a1a, #0f0f0f);
-  border: 2px solid ${theme.color.primary(6)};
   box-shadow: 0 0 30px ${theme.color.primary(9, {alpha:0.5})};
   border-radius: 15px;
-  padding: 10px;
   pointer-events: auto;
 }
 
 
 .carousel-inner {
   background: radial-gradient(circle at center, #1a1a1a, #0f0f0f);
-  border: 1px solid ${theme.color.primary(6)}; /*#00ff99 Glowing border effect */
+  /*border: 1px solid ${theme.color.primary(6)}; #00ff99 Glowing border effect */
   box-shadow: 0 0 30px ${theme.color.primary(9, {alpha:0.5})}; /* rgba(0, 255, 153, 0.5)Glowing effect */
 }
 

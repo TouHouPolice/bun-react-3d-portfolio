@@ -9,12 +9,14 @@ import { useControls } from 'leva'
 import PostProc from '@components/PostProc'
 import ScifiBackground from '@components/ScifiBackground'
 import MainOverlay from '@components/MainOverlay'
+import { LOAD_CANVAS } from './utils/Constants';
 const AsyncParticleSphere = React.lazy(() => import('@components/particle_sphere/ParticleSphere'))
 const AsyncCityModel = React.lazy(() => import('@components/CityModel'))
 
-const LOAD_CANVAS = false
+
 
 function App() {
+  const mode = import.meta.env.VITE_APP_MODE;
   const { didCatch, error } = useErrorBoundary()
   const props = useControls({
     camZoom: { value: 1.26, min: 0, max: 5, step: 0.01 },
@@ -31,7 +33,12 @@ function App() {
         {LOAD_CANVAS &&
           <ThreeCanvas 
           className="main-canvas"
-          showState={true}>
+          style={{
+            position: "fixed",
+            width: "100vw",
+            height: "100vh",
+          }}
+          showState={mode === 'dev'}>
             <PerspectiveCamera 
             makeDefault 
             position={[0, 0, 5]} 

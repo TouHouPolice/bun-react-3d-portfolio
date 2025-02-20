@@ -110,16 +110,23 @@ export default function Project( {projectsData}: ProjectProps ) {
                     <Row>
                         <Frame
                         className="demo-frame"
-                        type={FrameType.CORNERS}
+                        type={FrameType.NERO}
                         style={{
                             position: 'relative',
                             width: '100%',
                             marginTop: theme.space(4),
                             marginBottom: theme.space(6),
-                            padding: "5px"
+                            padding: "5px",
                         }}
                         >
-                        <div style={{ position: "relative", width: "100%", paddingTop: "56.25%", pointerEvents:"auto" }}>
+                        <div style={{ 
+                            position: "relative", 
+                            width: "100%", 
+                            paddingTop: "56.25%", 
+                            pointerEvents:"auto",
+                            borderRadius: "15px",
+                            border: `1px solid ${theme.color.primary(6)}`,
+                            }}>
                             <iframe
                                 src={demoUrl}
                                 style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
@@ -132,7 +139,18 @@ export default function Project( {projectsData}: ProjectProps ) {
 
                     {screenShots && screenShots.length > 0 && (
                     <Row>
-                        <SciFiCarousel images={screenShots}/>
+                        <Frame
+                        className="carousel-frame"
+                        style={{padding: "5px", marginBottom: theme.space(6)}}
+                        type={FrameType.NERO}>
+                        <SciFiCarousel
+                        styles={{
+                            position: 'relative', 
+                            borderRadius: "15px",
+                            border: `1px solid ${theme.color.primary(6)}`,
+                        }}
+                        images={screenShots}/>
+                        </Frame>
                     </Row>
                     )}
 
