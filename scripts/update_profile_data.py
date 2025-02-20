@@ -15,7 +15,7 @@ def update_profile_data():
     # Process each project
     for project in data.get("projects", []):
         resource_dir = os.path.join(root_dir, project.get("resource_directory", ""))
-        print(f"Processing project: {resource_dir}")
+        print(f"Processing project: {os.path.basename(resource_dir)}")
         if os.path.exists(resource_dir) and os.path.isdir(resource_dir):
             project["screenshots"] = [
                 f for f in os.listdir(resource_dir) 

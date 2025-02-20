@@ -20,7 +20,7 @@ type ProjectProps = {
     projectsData?: Array<ProjectData>,
 }
 
-const RESOURCE_DIR_ROOT = "/resources/projects";
+const RESOURCE_DIR_ROOT = "/resources/projects/";
 
 
 export default function Project( {projectsData}: ProjectProps ) {
