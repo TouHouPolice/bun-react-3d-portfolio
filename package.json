@@ -1,7 +1,8 @@
 {
-  "name": "bun-vite-3d-portfolio",
+  "name": "scifi-portfolio",
+  "homepage": "https://touhoupolice.github.io/scifi-portfolio/",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "prebuild": "python scripts/update_profile_data.py",
