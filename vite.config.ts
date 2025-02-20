@@ -4,6 +4,7 @@ import path from 'path'
 import glsl from 'vite-plugin-glsl';
 // https://vite.dev/config/
 export default defineConfig({
+  base: "./", // Ensures relative paths
   plugins: [
     react(),
     glsl({

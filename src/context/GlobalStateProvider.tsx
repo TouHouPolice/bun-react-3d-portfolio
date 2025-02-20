@@ -1,5 +1,4 @@
 import React, { createContext, useState, ReactNode } from 'react';
-
 interface GlobalState {
   // Define your state properties here
   allowOrbitControl: boolean;
@@ -18,8 +17,7 @@ const defaultState: GlobalState = {
 export const GlobalStateContext = createContext<GlobalState>(defaultState);
 
 export const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
-  const mode = import.meta.env.VITE_APP_MODE;
-  const [allowOrbitControl, setAllowOrbitControl] = useState(mode==='dev');
+  const [allowOrbitControl, setAllowOrbitControl] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   return (
     <GlobalStateContext.Provider value={{ 

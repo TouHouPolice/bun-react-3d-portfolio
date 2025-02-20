@@ -10,13 +10,22 @@ import PostProc from '@components/PostProc'
 import ScifiBackground from '@components/ScifiBackground'
 import MainOverlay from '@components/MainOverlay'
 import { LOAD_CANVAS } from './utils/Constants';
+import { addStyles } from '@utils/utils';
 const AsyncParticleSphere = React.lazy(() => import('@components/particle_sphere/ParticleSphere'))
 const AsyncCityModel = React.lazy(() => import('@components/CityModel'))
 
+const mode = import.meta.env.VITE_APP_MODE;
+console.log('App Mode:', mode)
 
+if (mode === 'prod') {
+  addStyles(`
+    #leva__root {
+      display: none;
+    }  
+  `)
+}
 
 function App() {
-  const mode = import.meta.env.VITE_APP_MODE;
   const { didCatch, error } = useErrorBoundary()
   const props = useControls({
     camZoom: { value: 1.26, min: 0, max: 5, step: 0.01 },

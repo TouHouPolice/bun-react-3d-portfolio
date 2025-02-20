@@ -31,7 +31,7 @@ const ThemeButton = memo((props: ButtonProps): JSX.Element => {
     useFrameAssembler(frameRef)
 
     return (
-        <Animator active={active} duration={{enter:2}}>
+        <Animator active={active} duration={{enter:1}}>
             <Animated<HTMLButtonElement>
                 as="button"
                 className={cx('theme-button', `theme-button-${color}`, `theme-button-${variant}`, className)}

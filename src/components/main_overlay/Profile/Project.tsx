@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Text from "@components/theme/Text";
 import { Col, Row } from "react-bootstrap";
@@ -73,7 +73,6 @@ export default function Project( {projectsData}: ProjectProps ) {
                     }}>
                     <Text 
                     as="h1"
-                    enterDuration={3}
                     >
                         {label}
                     </Text>
@@ -110,7 +109,6 @@ export default function Project( {projectsData}: ProjectProps ) {
                             // evenly space the text
                             textAlign: 'justify',
                         }}
-                        enterDuration={3}
                         >
                             {description}
                         </Text>

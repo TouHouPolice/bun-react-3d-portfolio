@@ -1,5 +1,5 @@
 import { theme } from "@styles/Arwes";
-import { Animator, Text as ArwesText } from "@arwes/react";
+import { Animator, AnimatorDuration, Text as ArwesText } from "@arwes/react";
 
 type TextProps = {
     as?: keyof HTMLElementTagNameMap
@@ -9,12 +9,12 @@ type TextProps = {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void,
     onMouseEnter?: (event: React.MouseEvent<HTMLButtonElement>) => void,
     decipher?: boolean,
-    enterDuration?: number
+    duration?: Partial<AnimatorDuration>
 }
 
-export default function Text({ as, children, style, className, onClick, onMouseEnter, decipher = false, enterDuration = 5 } : TextProps) {
+export default function Text({ as, children, style, className, onClick, onMouseEnter, decipher = false, duration = {enter:3} } : TextProps) {
     return (
-        <Animator duration={{enter: enterDuration}}>
+        <Animator duration={duration}>
             <ArwesText
             as={as}
             blink

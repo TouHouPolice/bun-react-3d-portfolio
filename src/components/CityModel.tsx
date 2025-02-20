@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useTexture, useGLTF, Preload } from "@react-three/drei";
+import { useTexture, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 

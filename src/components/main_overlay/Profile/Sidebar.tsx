@@ -3,7 +3,7 @@ import Frame, { FrameType } from "@components/theme/Frame";
 import {theme} from "@styles/Arwes";
 import { addStyles } from "@utils/utils";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Text
  from "@components/theme/Text";
 type SidebarItemProps = {
@@ -56,6 +56,7 @@ function SidebarItem({
                         fontSize: "1.3rem",
                         color: theme.color.primary(4),
                     }}
+                    duration={{delay: itemIndex * 0.1}}
                     >
                         {subItem.label}
                     </Text>
@@ -120,7 +121,7 @@ export default function Sidebar( {profileData}: SidebarProps ){
     useEffect(() => {
         if(profileData){
             // profile data is a json object, the key of each entry is the label of the sidebar item
-            const items = Object.entries(profileData).map(([key, value]) => {
+            const items = Object.entries(profileData).map(([key, value], index) => {
                 // check if the value is an array [], if so, it is the subitems of the sidebar item
                 return (
                     <SidebarItem
@@ -131,6 +132,7 @@ export default function Sidebar( {profileData}: SidebarProps ){
                     selectedSubItem={selectedSubItem}
                     onItemSelect={setSelectedItem}
                     onSubItemSelect={setSelectedSubItem}
+                    duration={{delay: index * 0.1}}
                     />
                 )
             });
