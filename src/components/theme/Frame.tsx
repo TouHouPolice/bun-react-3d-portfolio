@@ -6,7 +6,8 @@ import { Animator,
     FrameNero,
     FrameNefrex,
     FrameKranox,
-    FrameCircle
+    FrameCircle,
+    FrameHeader
 } from "@arwes/react";
 import {theme} from "@styles/Arwes";
 import { useMemo } from "react";
@@ -19,16 +20,18 @@ export enum FrameType {
     NERO,
     NEFREX,
     KRANOX,
-    CIRCLE
+    CIRCLE,
+    HEADER
 }
 
 type FrameProps = {
+    children?: React.ReactNode,
     className?: string,
     style?: React.CSSProperties,
     type?: FrameType
 }
 
-export default function Frame( { className='', style={}, type}: FrameProps ): JSX.Element {
+export default function Frame( { className='', style={}, type, children}: FrameProps ): JSX.Element {
     const frameStyle: React.CSSProperties = {
         // @ts-expect-error css variables
         '--arwes-frames-bg-color': `${theme.color.primary(9, {alpha: 0.3})}`, // 'hsl(180, 75%, 10%)',
@@ -52,6 +55,8 @@ export default function Frame( { className='', style={}, type}: FrameProps ): JS
                 return <FrameKranox style={frameStyle} />
             case FrameType.CIRCLE:
                 return <FrameCircle style={frameStyle} />
+            case FrameType.HEADER:
+                return <FrameHeader style={frameStyle} contentLength={60}/>
             case FrameType.CORNERS:
             default:
                 return <FrameCorners style={frameStyle} />
@@ -60,10 +65,11 @@ export default function Frame( { className='', style={}, type}: FrameProps ): JS
     return (
         <Animator>
           <div
-          className={`${className}`.trim()}
-          style={{ position:"absolute", pointerEvents:"none", ...style }}
+          className={`theme-frame ${className}`.trim()}
+          style={{ ...style }}
           >
             {frameComponent}
+            {children}
           </div>
         </Animator>
       )

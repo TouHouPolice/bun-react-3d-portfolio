@@ -3,10 +3,10 @@ import { Col, Row } from "react-bootstrap";
 import Header from "./Header";
 import { Animator } from "@arwes/react";
 import { theme } from "@styles/Arwes";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Profile/Sidebar";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Project from "./Project";
+import Project from "./Profile/Project";
 
 export default function Profile() {
     const [profileData, setProfileData] = useState();
@@ -25,27 +25,27 @@ export default function Profile() {
         <Header/>
         <Row style={{marginTop: theme.space(4)}}>
             <Animator>
-                <Col 
-                className="position-relative" 
-                xl={2} md={3} sm={4}
-                style={{marginRight: theme.space(4)}}
+                <Col
+                className="left-panel"
+                xl={3} md={4} sm={5}
                 >
                     <Sidebar profileData={profileData}/>
                 </Col>
-                <Col className="position-relative">
-                    <Frame 
-                    style={{width: '100%', minHeight: '50px'}}
-                    type={FrameType.OCTAGON}
-                    />
-                    <Routes >
+                <Col 
+                className="right-panel"
+                style={{width: '100%', position: 'relative'}}
+                >
+                <Frame type={FrameType.OCTAGON}>
+                    <Routes>
                         {profileData && 
                         <Route 
                         path="/projects/:index" 
                         element={<Project projectsData={profileData["projects"]}/>} 
                         />
                         }
-                        
                     </Routes>
+                </Frame>
+
                 </Col>
             </Animator>
         </Row>

@@ -7,22 +7,27 @@ body{
 
 #root{
     width: 100vw;
-    height: 100vh;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(5, 5, 5);
+    background-color: #000906;
 }
 
 .app{
+    //width: 100%;
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .scifi-background{
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000906f5;
     inset: 0;
-    background-color: #0009060e;
     //background-image: radial-gradient(85% 85% at 50% 50%, hsla(185, 100%, 25%, 0.171) 0%, hsla(185, 100%, 25%, 0.12) 50%, hsla(185, 100%, 25%, 0) 100%);
     z-index: 1;
     pointer-events: none;
@@ -42,6 +47,7 @@ body{
     height: 100%;
     z-index: 2;
     padding: 15px 40px 0 40px;
+    pointer-events: none;
 }
 
 .welcome-container{
@@ -62,4 +68,11 @@ body{
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+}
+
+.theme-frame{
+    position: relative;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
 }

@@ -16,6 +16,7 @@ export default function Text({ as, children, style, className, onClick } : TextP
         className={className || undefined}
         onClick={onClick}
         style={{
+            pointerEvents: 'auto',
             fontFamily: theme.font(0).fontFamily,
             fontWeight: theme.font(0).fontWeight,
             color: theme.color.primary(4),

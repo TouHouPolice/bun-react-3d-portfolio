@@ -18,6 +18,7 @@ export default function Header(){
                         target="_blank" 
                         key={`icon-${index}`}
                         href={icon.url}
+                        style={{pointerEvents: 'auto'}}
                         >
                             <Animated
                                 as='i'
@@ -36,12 +37,16 @@ export default function Header(){
 
     return (
     <Animator>
+                               <Frame
+                type={FrameType.OCTAGON}
+            >
         <Row 
         className="position-relative align-items-center"
         style={{ 
             padding: '10px 0',
         }}
         >
+ 
             <Col
             className="d-flex align-items-center"
             style={{marginLeft: theme.space(3)}}
@@ -72,11 +77,9 @@ export default function Header(){
             >
                 {iconComponents}
             </Col>
-            <Frame
-                type={FrameType.OCTAGON}
-                style={{ position: 'absolute', width: '100%', height:'100%'}}
-            />
+
         </Row>
+        </Frame>
     </Animator>
     )
 }

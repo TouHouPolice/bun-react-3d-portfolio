@@ -2,31 +2,48 @@ import { Animator, AnimatorDuration } from "@arwes/react";
 import Frame, { FrameType } from "@components/theme/Frame";
 import {theme} from "@styles/Arwes";
 import { addStyles } from "@utils/utils";
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Text
  from "@components/theme/Text";
 type SidebarItemProps = {
     label: string,
     duration?: Partial<AnimatorDuration>,
     subItems?: any[] | null,
-    active?: boolean,
+    selectedItem?: string | null,
+    selectedSubItem?: string | null,
+    onItemSelect?: React.Dispatch<React.SetStateAction<string | null>>,
+    onSubItemSelect?: React.Dispatch<React.SetStateAction<string | null>>,
 }
-function SidebarItem({label, duration, subItems, active}: SidebarItemProps){
-    const navigate = useNavigate();
 
-    const subItemComponents = useMemo(() => {
+function SidebarItem({
+    label, duration, subItems, selectedItem, 
+    selectedSubItem, onItemSelect, onSubItemSelect
+}: SidebarItemProps){
+    const navigate = useNavigate();
+    const [subItemComponents, setSubItemComponents] = useState<JSX.Element[] | null>(null);
+    const [itemActive, setItemActive] = useState<boolean>(false);
+    useEffect(() => {
+        if(selectedItem){
+            setItemActive(selectedItem.toLowerCase() === label.toLowerCase());
+        }
+    },[selectedItem, label]);
+
+    useEffect(() => {
         if(subItems){
-            return subItems.map((subItem: {label: string}, index: number) => {
+            const components = subItems.map((subItem: {label: string}, itemIndex: number) => {
+                const subItemActive = selectedSubItem && itemActive &&
+                selectedSubItem.toLowerCase() === subItem.label.toLowerCase();
                 return (
                     <Text
                     as="li"
-                    key={`sub-item-${index}`}
-                    className="sidebar-sub-item"
+                    key={`sub-item-${itemIndex}`}
+                    className={`sidebar-sub-item ${subItemActive ? 'active' : ''}`.trim()}
                     onClick={() => {
-                        const destPath = `/profile/${label.toLowerCase()}/${index}`;
-                        console.log(destPath);
-                        navigate(destPath, {replace: true});
+                        onItemSelect && onItemSelect(label);
+                        onSubItemSelect && onSubItemSelect(subItem.label);
+                        const destPath = `/profile/${label.toLowerCase()}/${itemIndex}`;
+                        navigate(destPath, {replace: true});                        
                     }}
                     style={{
                         fontFamily: theme.font(0).fontFamily,
@@ -38,18 +55,21 @@ function SidebarItem({label, duration, subItems, active}: SidebarItemProps){
                         {subItem.label}
                     </Text>
                 )
-            })
-    }}, [subItems]);
+            });
+            setSubItemComponents(components);
+        }
+    }, [itemActive, subItems, selectedItem, selectedSubItem, onSubItemSelect, onItemSelect, label]);
 
     return (
         <Animator duration={duration}>
         <div className="sidebar-item-wrapper">
             <div 
-            className={`sidebar-item ${active ? 'active' : ''}`}
+            className={`sidebar-item ${itemActive ? 'active' : ''}`}
             style={{
                 pointerEvents: subItems ? 'none' : 'auto',
             }}
             onClick={() => {
+                onItemSelect && onItemSelect(label);
                 if(!subItems){
                     navigate("/profile/"+label.toLowerCase(), {replace: true});
                 }
@@ -86,6 +106,8 @@ type SidebarProps = {
 
 export default function Sidebar( {profileData}: SidebarProps ){
     const [sidebarItems, setSidebarItems] = useState<JSX.Element[]>([]);
+    const [selectedItem, setSelectedItem] = useState<string | null>(null);
+    const [selectedSubItem, setSelectedSubItem] = useState<string | null>(null);
 
     useEffect(() => {
         if(profileData){
@@ -97,24 +119,32 @@ export default function Sidebar( {profileData}: SidebarProps ){
                     key={`sidebar-item-${key}`}
                     label={key}
                     subItems= {Array.isArray(value) ? value : null}
+                    selectedItem={selectedItem}
+                    selectedSubItem={selectedSubItem}
+                    onItemSelect={setSelectedItem}
+                    onSubItemSelect={setSelectedSubItem}
                     />
                 )
             });
             setSidebarItems(items);
         }
-    }, [profileData]);
+    }, [profileData, selectedItem, selectedSubItem, setSelectedItem, setSelectedSubItem]);
 
     return (
         <>
         <Frame 
-        style={{width: '100%', height: '100%'}}
+        style={{
+            width: '100%', 
+            position:"relative",
+            height: "auto"
+        }}
         type={FrameType.OCTAGON}
-        />
+        >
         <div
         style={{
             position:"relative",
             width: '100%',
-            height: '100%',
+
             display: 'flex',
             flexDirection: 'column',
             padding: theme.space(4),
@@ -122,6 +152,8 @@ export default function Sidebar( {profileData}: SidebarProps ){
         >
             {sidebarItems}
         </div>
+        </Frame>
+
         </>
     )
 }
@@ -155,6 +187,7 @@ addStyles(`
     border-bottom: 1px solid ${theme.color.primary(2)};
     margin-bottom: ${theme.space(2)};
     cursor: pointer;
+    pointer-events: auto;
 }
 
 .sidebar-sub-item.active, .sidebar-sub-item:hover, .sidebar-sub-item:focus{
