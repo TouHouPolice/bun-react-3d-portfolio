@@ -4,8 +4,22 @@ import Header from "./Header";
 import { Animator } from "@arwes/react";
 import { theme } from "@styles/Arwes";
 import Sidebar from "./Sidebar";
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Project from "./Project";
 
 export default function Profile() {
+    const [profileData, setProfileData] = useState();
+    useEffect(() => {
+        fetch('/resources/profile_data.json')
+            .then(response => response.json())
+            .then(data => {
+                setProfileData(data)
+            }
+            )
+            .catch(error => console.error('Error fetching JSON:', error));
+    }, []);
+
     return (
         <>
         <Header/>
@@ -16,13 +30,22 @@ export default function Profile() {
                 xl={2} md={3} sm={4}
                 style={{marginRight: theme.space(4)}}
                 >
-                    <Sidebar/>
+                    <Sidebar profileData={profileData}/>
                 </Col>
                 <Col className="position-relative">
                     <Frame 
-                    style={{width: '100%', height: '500px'}}
+                    style={{width: '100%', minHeight: '50px'}}
                     type={FrameType.OCTAGON}
                     />
+                    <Routes >
+                        {profileData && 
+                        <Route 
+                        path="/projects/:index" 
+                        element={<Project projectsData={profileData["projects"]}/>} 
+                        />
+                        }
+                        
+                    </Routes>
                 </Col>
             </Animator>
         </Row>

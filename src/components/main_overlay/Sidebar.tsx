@@ -80,19 +80,12 @@ function SidebarItem({label, duration, subItems, active}: SidebarItemProps){
     )
 }
 
-export default function Sidebar(){
-    const [profileData, setProfileData] = useState();
-    const [sidebarItems, setSidebarItems] = useState<JSX.Element[]>([]);
+type SidebarProps = {
+    profileData?: object
+}
 
-    useEffect(() => {
-        fetch('/resources/profile_data.json')
-            .then(response => response.json())
-            .then(data => {
-                setProfileData(data)
-            }
-            )
-            .catch(error => console.error('Error fetching JSON:', error));
-    }, []);
+export default function Sidebar( {profileData}: SidebarProps ){
+    const [sidebarItems, setSidebarItems] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
         if(profileData){
