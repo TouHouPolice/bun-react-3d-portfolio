@@ -60,21 +60,30 @@ export default function Project( {projectsData}: ProjectProps ) {
         <div className="w-100">
             <Row>
                 <Col>
-                    <Text 
-                    as="h1"
+                    <div 
                     style={{
+                        position: 'relative',
+                        width: '100%',
                         marginTop: theme.space(5),
                         display: 'flex',
                         justifyContent: 'center',
                         paddingBottom: theme.space(2),
                         borderBottom: `1px solid ${theme.color.primary(3)}`,
-                    }}
-                    >{label}</Text>
+                        boxShadow: `0 10px 15px ${theme.color.primary(6, {alpha:0.5})}`,
+                    }}>
+                    <Text 
+                    as="h1"
+                    enterDuration={3}
+                    >
+                        {label}
+                    </Text>
+                    </div>
                     {link && (
                         <a 
                         target="_blank" 
                         href={link}
                         style={{
+                            pointerEvents: 'auto',
                             position:"absolute",
                             right: theme.space(6),
                             top: theme.space(5),
@@ -101,6 +110,7 @@ export default function Project( {projectsData}: ProjectProps ) {
                             // evenly space the text
                             textAlign: 'justify',
                         }}
+                        enterDuration={3}
                         >
                             {description}
                         </Text>
@@ -145,6 +155,7 @@ export default function Project( {projectsData}: ProjectProps ) {
                         type={FrameType.NERO}>
                         <SciFiCarousel
                         styles={{
+                            width: "100%",
                             position: 'relative', 
                             borderRadius: "15px",
                             border: `1px solid ${theme.color.primary(6)}`,

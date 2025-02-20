@@ -1,4 +1,4 @@
-import { Animator, AnimatorDuration } from "@arwes/react";
+import { Animator, AnimatorDuration, useBleeps } from "@arwes/react";
 import Frame, { FrameType } from "@components/theme/Frame";
 import {theme} from "@styles/Arwes";
 import { addStyles } from "@utils/utils";
@@ -23,6 +23,7 @@ function SidebarItem({
     const navigate = useNavigate();
     const [subItemComponents, setSubItemComponents] = useState<JSX.Element[] | null>(null);
     const [itemActive, setItemActive] = useState<boolean>(false);
+    const bleeps = useBleeps();
     useEffect(() => {
         if(selectedItem){
             setItemActive(selectedItem.toLowerCase() === label.toLowerCase());
@@ -40,10 +41,14 @@ function SidebarItem({
                     key={`sub-item-${itemIndex}`}
                     className={`sidebar-sub-item ${subItemActive ? 'active' : ''}`.trim()}
                     onClick={() => {
-                        onItemSelect && onItemSelect(label);
-                        onSubItemSelect && onSubItemSelect(subItem.label);
+                        bleeps.click?.play();
+                        onItemSelect?.(label);
+                        onSubItemSelect?.(subItem.label);
                         const destPath = `/profile/${label.toLowerCase()}/${itemIndex}`;
-                        navigate(destPath, {replace: true});                        
+                        navigate(destPath, {replace: true});                     
+                    }}
+                    onMouseEnter={() => {
+                        bleeps.hover?.play();
                     }}
                     style={{
                         fontFamily: theme.font(0).fontFamily,
@@ -58,7 +63,7 @@ function SidebarItem({
             });
             setSubItemComponents(components);
         }
-    }, [itemActive, subItems, selectedItem, selectedSubItem, onSubItemSelect, onItemSelect, label]);
+    }, [bleeps, itemActive, subItems, selectedItem, selectedSubItem, onSubItemSelect, onItemSelect, label]);
 
     return (
         <Animator duration={duration}>
@@ -73,6 +78,9 @@ function SidebarItem({
                 if(!subItems){
                     navigate("/profile/"+label.toLowerCase(), {replace: true});
                 }
+            }}
+            onMouseEnter={() => {
+                bleeps.hover?.play();
             }}
             >
                 <Text

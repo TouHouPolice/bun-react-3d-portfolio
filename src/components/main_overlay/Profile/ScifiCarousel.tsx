@@ -3,7 +3,6 @@ import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';  // Import Bootstrap CSS
 import { addStyles } from '@utils/utils';
 import { theme } from '@styles/Arwes';
-import Frame, { FrameType } from '@components/theme/Frame';
 
 interface SciFiCarouselProps {
   styles?: React.CSSProperties;
@@ -33,6 +32,20 @@ const SciFiCarousel: React.FC<SciFiCarouselProps> = ({ images, styles, className
 };
 
 addStyles(`
+.sci-fi-img {
+  border-radius: 15px;
+  filter: brightness(0.8);
+  transition: filter 0.3s ease-in-out;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sci-fi-img:hover {
+  filter: brightness(1) contrast(1.1);
+}
+
 .sci-fi-carousel {
   box-shadow: 0 0 30px ${theme.color.primary(9, {alpha:0.5})};
   border-radius: 15px;
@@ -49,13 +62,12 @@ addStyles(`
 .carousel-control-prev,
 .carousel-control-next {
   background-color: transparent;
-
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    pointer-events: auto;
-    color: ${theme.color.primary(6)}; /* #00ff99Sci-fi glow */
-  }
-}  
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  pointer-events: auto;
+  color: ${theme.color.primary(6)}; /* #00ff99Sci-fi glow */
+}
 `)
 
 export default SciFiCarousel;

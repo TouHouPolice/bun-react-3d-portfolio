@@ -4,6 +4,7 @@ import { Animated, Animator } from "@arwes/react";
 import { theme } from "@styles/Arwes";
 import { useEffect, useState } from "react";
 import Text from "@components/theme/Text";
+import { addStyles } from "@utils/utils";
 
 export default function Header(){
     const [iconComponents, setIconComponents] = useState();
@@ -37,9 +38,9 @@ export default function Header(){
 
     return (
     <Animator>
-                               <Frame
-                type={FrameType.OCTAGON}
-            >
+        <Frame
+        type={FrameType.OCTAGON}
+        >
         <Row 
         className="position-relative align-items-center"
         style={{ 
@@ -68,7 +69,7 @@ export default function Header(){
                     textShadow: `0 0 2px ${theme.color.primary(3)}`
                 }}
                 >
-                    Classfied
+                    ///Acess Granted///
                 </Text>
             </Col>
             <Col 
@@ -83,3 +84,16 @@ export default function Header(){
     </Animator>
     )
 }
+
+addStyles(`
+.logo-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none; /* Prevent blocking the image */
+  background-color: ${theme.color.primary(3)};
+}
+`)
