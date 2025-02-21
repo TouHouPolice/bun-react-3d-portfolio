@@ -1,3 +1,4 @@
+$theme-color: #6aabff;
 
 body{
     margin: 0;
@@ -110,15 +111,40 @@ body{
             width: 100%;
             min-width: 200px;
             background-color: #1d262e;
-            border: 1px solid #6aabff;
-            box-shadow: 0 0 10px 0 #6aabff;
+            border: 1px solid $theme-color;
+            box-shadow: 0 0 10px 0 $theme-color;
         }
 
         p{
-            color: #6aabff;
+            color: $theme-color;
             font-family: Tomorrow;
             font-size: 1.5rem;
             margin-top: 10px;
         }
+    }
+}
+
+.mobile-block{
+    position: fixed;
+    pointer-events: auto;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #161616;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    i{
+        color: $theme-color;
+    }
+
+    span{
+        color: $theme-color;
+        font-family: Tomorrow;
+        font-size: 1.5rem;
+        margin-top: 10px;
     }
 }

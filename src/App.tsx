@@ -12,6 +12,9 @@ import MainOverlay from '@components/MainOverlay'
 import { LOAD_CANVAS } from './utils/Constants';
 import { addStyles } from '@utils/utils';
 import LoadingScreen from '@components/LoadingScreen';
+import MobileBlocker from '@components/MobileBlocker';
+import { isMobile } from 'react-device-detect';
+
 const AsyncParticleSphere = React.lazy(() => import('@components/particle_sphere/ParticleSphere'))
 const AsyncCityModel = React.lazy(() => import('@components/CityModel'))
 
@@ -31,6 +34,12 @@ function App() {
   const props = useControls({
     camZoom: { value: 1.26, min: 0, max: 5, step: 0.01 },
   })
+
+  if (isMobile) {
+    return (
+      <MobileBlocker />
+    )
+  }
 
   return didCatch ? (
     <div>{error.message}</div>
