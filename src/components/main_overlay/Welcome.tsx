@@ -30,6 +30,7 @@ export default function Welcome({}: WelcomeProps) {
                         >
                             WELCOME
                         </Text>
+                        <Text>Click to activate sounds</Text>
                         <ThemeButton
                         onClick={() => {navigate('/profile')}}
                         >

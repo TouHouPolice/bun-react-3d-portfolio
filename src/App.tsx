@@ -11,6 +11,7 @@ import ScifiBackground from '@components/ScifiBackground'
 import MainOverlay from '@components/MainOverlay'
 import { LOAD_CANVAS } from './utils/Constants';
 import { addStyles } from '@utils/utils';
+import LoadingScreen from '@components/LoadingScreen';
 const AsyncParticleSphere = React.lazy(() => import('@components/particle_sphere/ParticleSphere'))
 const AsyncCityModel = React.lazy(() => import('@components/CityModel'))
 
@@ -39,6 +40,7 @@ function App() {
       <div className='app'>
         <ScifiBackground />
         <MainOverlay />
+        <LoadingScreen />
         {LOAD_CANVAS &&
           <ThreeCanvas 
           className="main-canvas"

@@ -61,8 +61,9 @@ export default function Header(){
                     />
                 </Animator>
                 <Text
-                as="h2"
+                as="span"
                 style={{
+                    fontSize: `${theme.font(0).fontSize}`,
                     textTransform: 'uppercase',
                     marginLeft: theme.space(3),
                     color: theme.color.primary(3),
